@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>human: a chatbot that's been reading</title>
+<meta name="description" content="human is an experimental chatbot persona. It reads news, podcast transcripts and video transcripts into a local memory, then talks to you from what it has read.">
+<meta property="og:title" content="human">
+<meta property="og:description" content="Reads the news, the podcasts, the videos. Then it talks to you.">
+<meta property="og:image" content="https://YOUR-USERNAME.github.io/human/assets/og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://YOUR-USERNAME.github.io/human/assets/og.jpg">
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="top">
+  <span class="mark">human</span>
+  <span class="links"><a href="#what">what</a><a href="#how">how</a><a href="#start">quickstart</a><a href="#support">support</a><a href="https://github.com/YOUR-USERNAME/human">github ↗</a></span>
+</nav>
+
+<header class="hero">
+  <img src="assets/human-hero.png" alt="Stippled ink drawing of a face whose hair turns into wires, with the word human across it" width="1280" height="720">
+  <h1>reads the news, the podcasts, the videos.<br><em>then it talks to you.</em></h1>
+  <p class="sub">An experimental chatbot persona with a memory pipeline. Built to feel human to talk to.</p>
+  <p class="badges"><span>python 3.10+</span><span>0 core deps</span><span>openrouter</span><span>MIT</span></p>
+</header>
+
+<section id="what">
+  <h2>// what is human</h2>
+  <p>human is a chatbot with a habit: it reads. A small ingest script pulls news from RSS feeds, podcast episodes through their published transcripts, and videos through their captions. Everything goes into a local memory on your own disk.</p>
+  <p>When you talk to it, human doesn't go search the web. It looks through what it has already read, picks the few pieces that matter, and answers in a warm, plain voice through whichever model you choose on OpenRouter. One memory lookup and one model call, which is why it's fast.</p>
+  <p class="honest">To be clear about what this is: software. A language model, a persona prompt and a memory file. It doesn't have feelings and it doesn't know everything. It knows what you fed it, up to the last time you ran ingest, and it will tell you so.</p>
+</section>
+
+<section id="how">
+  <h2>// how it works</h2>
+<pre class="diagram">
+  news (rss) ─┐
+  podcasts  ──┼─▶  ingest  ─▶  chunk + embed  ─▶  memory/memory.json
+  videos    ──┘                                        │
+                                                       ▼
+  you ─▶  chat (cli / web)  ─▶  recall top-k  ─▶  persona prompt  ─▶  openrouter  ─▶  reply
+</pre>
+  <ul class="grid">
+    <li><b>ingest</b><span>RSS + Atom, Podcasting 2.0 &lt;podcast:transcript&gt;, YouTube captions</span></li>
+    <li><b>memory</b><span>local vector store in one JSON file. Nothing leaves your machine except the prompt</span></li>
+    <li><b>persona</b><span>one editable prompt in <code>human/persona.py</code></span></li>
+    <li><b>model</b><span>any model on OpenRouter, set with <code>HUMAN_MODEL</code></span></li>
+  </ul>
+</section>
+
+<section id="start">
+  <h2>// quickstart</h2>
+<pre><code>git clone https://github.com/YOUR-USERNAME/human.git
+cd human
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # add OPENROUTER_API_KEY
+python -m human.ingest        # read the feeds in config/sources.json
+python -m human.chat          # talk in the terminal
+python -m human.server        # or open http://127.0.0.1:8787</code></pre>
+  <p class="small">No key yet? <code>python -m human.ingest --sample</code> then <code>python -m human.chat</code> runs fully offline in a basic quote-back mode.</p>
+</section>
+
+<section id="support">
+  <h2>// support human</h2>
+  <p>Running human costs real money: model calls on OpenRouter, the compute and bandwidth to keep reading every day, and hosting the chat. If you'd like to help cover that, you can send a donation to any of these addresses.</p>
+  <div class="addr"><span class="chain">solana</span><code id="a-sol">6u6pQiXmpkAUa76uhHYNiic8HbV8srCr5CUymrHZe6nF</code><button data-copy="a-sol">copy</button></div>
+  <div class="addr"><span class="chain">evm · eth / base / etc.</span><code id="a-evm">0xB1dA14ac36590440B3834A0F60f88B9b863fb7ce</code><button data-copy="a-evm">copy</button></div>
+  <div class="addr"><span class="chain">bitcoin</span><code id="a-btc">bc1q73y7vdrggstyafqf2xpyx0gh8f4glh204r4sm7</code><button data-copy="a-btc">copy</button></div>
+  <p class="small">Donations are voluntary gifts toward running costs. They don't buy anything: no token, no rewards, no returns, no special access. Always double-check an address before sending.</p>
+</section>
+
+<footer>
+  <p>human is open source (MIT). Its RAG core is based on <a href="https://github.com/eduardk89/py-rag-chatbot">py-rag-chatbot</a> by Eduard Kondratyev (MIT).</p>
+  <p class="maker">built with insights bot</p>
+</footer>
+
+<script>
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  const v=document.getElementById(b.dataset.copy).textContent;
+  try{await navigator.clipboard.writeText(v);b.textContent='copied'}catch(e){b.textContent='select + copy'}
+  setTimeout(()=>b.textContent='copy',1500);
+}));
+</script>
+</body>
+</html>

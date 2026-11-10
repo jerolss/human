@@ -1,0 +1,11 @@
+{
+  "_comment": "What human reads. type = news | podcast | youtube. Podcasts use <podcast:transcript> when the feed has it. YouTube needs a channel_id (or a full feed url).",
+  "sources": [
+    {"type": "news", "name": "BBC News - World", "url": "https://feeds.bbci.co.uk/news/world/rss.xml"},
+    {"type": "news", "name": "NPR News", "url": "https://feeds.npr.org/1001/rss.xml"},
+    {"type": "news", "name": "The Guardian - World", "url": "https://www.theguardian.com/world/rss"},
+    {"type": "news", "name": "Hacker News front page", "url": "https://hnrss.org/frontpage"},
+    {"type": "podcast", "name": "Podnews Weekly Review", "url": "https://podnews.net/rss"},
+    {"type": "youtube", "name": "TED", "channel_id": "UCAuUUnT6oDeKwE6v1NGQxug", "_note": "YouTube channel feeds sometimes 404 from cloud IPs; ingest skips and continues"}
+  ]
+}
