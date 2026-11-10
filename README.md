@@ -268,9 +268,6 @@ to any of these addresses.
 bc1q73y7vdrggstyafqf2xpyx0gh8f4glh204r4sm7
 ```
 
-Donations are voluntary gifts toward running costs. They don't buy anything:
-there's no token, no rewards, no returns and no special access. Double-check
-the address before you send.
 
 ## credits
 
