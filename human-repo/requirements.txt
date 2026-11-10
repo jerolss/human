@@ -1,0 +1,3 @@
+# The core (rag_chatbot/ + human/) uses only the Python standard library.
+# Optional: real YouTube transcripts. Without it, videos fall back to their description.
+youtube-transcript-api>=1.0

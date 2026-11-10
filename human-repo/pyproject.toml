@@ -1,0 +1,38 @@
+[project]
+name = "human"
+version = "0.1.0"
+description = "An experimental chatbot persona with a memory pipeline: reads news, podcast and video transcripts, then talks to you."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+youtube = ["youtube-transcript-api>=1.0"]
+dev = ["ruff>=0.6"]
+
+[project.scripts]
+human-ingest = "human.ingest:main"
+human-chat = "human.chat:main"
+human-server = "human.server:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["human", "rag_chatbot", "rag_chatbot.embeddings", "rag_chatbot.chat"]
+
+[tool.setuptools.package-data]
+human = ["web/*.html"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+extend-exclude = ["rag_chatbot"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
